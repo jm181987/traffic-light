@@ -1,12 +1,44 @@
-//import react into the bundle
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+import '../styles/index.css';
 
-// include your styles into the webpack bundle
-import "../styles/index.css";
+const TrafficLight = props => {
 
-//import your own components
-import Home from "./component/home.jsx";
+  const [luzActiva, setLuzActiva] = useState("");
+  
+  const cambiarLuzActiva = (e) => {
+     console.log(e.target.className);
+     setLuzActiva(e.target.className);
+  }
 
-//render your react application
-ReactDOM.render(<Home />, document.querySelector("#app"));
+  let resultadoRed = luzActiva === "red-light" ? " red-light-active" : "";
+  let resultadoYellow = luzActiva === "yellow-light" ? " yellow-light-active" : "";
+  let resultadoGreen = luzActiva === "green-light" ? " green-light-active" : "";
+  
+  return (
+    <div className="semaforo">
+        <div className={"red-light" + resultadoRed} onClick={(e) => cambiarLuzActiva(e)}></div>
+        <div className={"yellow-light" + resultadoYellow} onClick={(e) => cambiarLuzActiva(e)}></div>
+        <div className={"green-light" + resultadoGreen} onClick={(e) => cambiarLuzActiva(e)}></div>
+    </div>
+  )
+}
+
+const App = () => {
+  return (
+    <>
+    <h2>Traffic Light by Jorge Marquez</h2>
+    <div className="container">
+      <TrafficLight />
+      
+    </div>
+    </>
+  )
+}
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('app')
+);
